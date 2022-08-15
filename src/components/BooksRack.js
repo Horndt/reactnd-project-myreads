@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import Book from "./Books";
 
-const BookSorting = ({ title, books, bookChangeShelf, error }) => {
+const BooksRack = ({ title, books, bookChangeRack, error }) => {
   return (
     <div className="bookshelf">
       <h2 className="bookshelf-title">{title}</h2>
@@ -10,11 +10,7 @@ const BookSorting = ({ title, books, bookChangeShelf, error }) => {
         {books.length ? (
           <ol className="books-grid">
             {books.map((book) => (
-              <Book
-                bookChangeShelf={bookChangeShelf}
-                key={book.id}
-                book={book}
-              />
+              <Book bookChangeRack={bookChangeRack} key={book.id} book={book} />
             ))}
           </ol>
         ) : (
@@ -25,10 +21,10 @@ const BookSorting = ({ title, books, bookChangeShelf, error }) => {
   );
 };
 
-BookSorting.propTypes = {
+BooksRack.propTypes = {
   title: PropTypes.string.isRequired,
   books: PropTypes.array.isRequired,
-  bookChangeShelf: PropTypes.func.isRequired,
+  bookChangeRack: PropTypes.func.isRequired,
 };
 
-export default BookSorting;
+export default BooksRack;

@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-const Book = ({ BookChangeShelf, book }) => {
+const Book = ({ bookChangeShelf, book }) => {
   let image = book.imageLink
     ? book.imageLink.thumb
     : "https://www.deskmodder.de/phpBB3/files/vorschau/38_No_Cover_Jyrik.png";
@@ -18,7 +18,10 @@ const Book = ({ BookChangeShelf, book }) => {
             }}
           ></div>
           <div className="book-shelf-changer">
-            <select>
+            <select
+              value={book.shelf}
+              onChange={(e) => bookChangeShelf(book, e.target.value)}
+            >
               <option disabled>Move to...</option>
               <option value="currentlyReading">Currently Reading</option>
               <option value="wantToRead">Want to Read</option>
@@ -37,7 +40,7 @@ const Book = ({ BookChangeShelf, book }) => {
 };
 
 Book.PropTypes = {
-  BookChangeShelf: PropTypes.func.isRequired,
+  bookChangeShelf: PropTypes.func.isRequired,
   book: PropTypes.object.isRequired,
 };
 

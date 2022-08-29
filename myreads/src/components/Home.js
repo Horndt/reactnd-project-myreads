@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTyes from 'prop-types';
 import BookRack from './BookRack';
+import { Link } from 'react-router-dom';
 
 function Home({ books, bookSight, inputRack }) {
   const showRack = [
@@ -29,7 +30,7 @@ function Home({ books, bookSight, inputRack }) {
           </div>
         </div>
         <div className="open-search">
-          <button onClick={() => window.open('/search', '_self')}></button>
+          <Link to="/search">Add a book</Link>
         </div>
       </div>
     </div>

@@ -1,47 +1,58 @@
-import React from "react";
-import PropTypes from "prop-types";
+import React from 'react';
+import { update } from '../API/BooksAPI';
+import PropTypes from 'prop-types';
 
-const Book = ({ bookChangeRack, book }) => {
-  let image = book.imageLink
-    ? book.imageLink.thumb
-    : "https://www.deskmodder.de/phpBB3/files/vorschau/38_No_Cover_Jyrik.png";
+function Books({ book, bookSight, inputRack }) {
+  async function updateBook(e) {
+    try {
+      await update(book, e.target.value);
+      inputRack(e.target.value, book);
+    } catch (e) {
+      console.log(e);
+    }
+  }
   return (
-    <li>
-      <div className="book">
-        <div className="book-top">
-          <div
-            className="book-cover"
-            style={{
-              width: 128,
-              height: 193,
-              backgroundImage: `url(${image})`,
-            }}
-          ></div>
-          <div className="book-shelf-changer">
-            <select
-              value={book.shelf}
-              onChange={(e) => bookChangeRack(book, e.target.value)}
-            >
-              <option disabled>Move to...</option>
-              <option value="currentlyReading">Currently Reading</option>
-              <option value="wantToRead">Want to Read</option>
-              <option value="read">Read</option>
-              <option value="none">None</option>
-            </select>
+    <div>
+      {book.authors && book.imageLinks && (
+        <div className="book">
+          <div className="book-top">
+            <div
+              className="book-cover"
+              style={{
+                width: 128,
+                height: 193,
+                backgroundImage: `url(${book.imageLinks.smallThumbnail})`,
+              }}
+            ></div>
+            <div className="book-shelf-changer">
+              <select defaultValue={book.shelf} onChange={updateBook}>
+                <option value="move" disabled>
+                  Move to...
+                </option>
+                <option value="currentlyReading">Currently Reading</option>
+                <option value="wantToRead">Want to Read</option>
+                <option value="read">Read</option>
+                <option value="none">None</option>
+              </select>
+            </div>
           </div>
+          <div className="list-books"></div>
+          <div className="book-title" onClick={() => bookSight(book)}>
+            {book.title}
+          </div>
+          {book.authors.map((author) => (
+            <div key={book.id + author}>
+              <div className="book-authors">{author}</div>
+            </div>
+          ))}
         </div>
-        <div className="book-title">{book.title}</div>
-        <div className="book-authors">
-          {book.authors ? book.authors.join(", ") : "Author unknown :( "}
-        </div>
-      </div>
-    </li>
+      )}
+    </div>
   );
-};
-
-Book.propTypes = {
-  bookChangeRack: PropTypes.func.isRequired,
+}
+Books.prototype = {
   book: PropTypes.object.isRequired,
+  inputRack: PropTypes.func.isRequired,
+  bookSight: PropTypes.func.isRequired,
 };
-
-export default Book;
+export default Books;

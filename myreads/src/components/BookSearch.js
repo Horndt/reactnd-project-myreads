@@ -38,37 +38,42 @@ function BookSearch({ books, bookSight, inputRack }) {
 
   return (
     <div>
-      {result && (
-        <div className="search-books">
-          <div className="search-books-bar">
-            <Link to="/" className="close-search">
-              Close
-            </Link>
-            <div className="search-book-input-wrapper">
-              <input
-                type="text"
-                placeholder="search by title, author"
-                value={query}
-                onChange={(e) => setQuery(e.target.value)}
-              />
+      <center>
+        <h1>Search for new Books</h1>
+        <div>
+          {result && (
+            <div className="search-books">
+              <div className="search-books-bar">
+                <Link to="/" className="close-search">
+                  Close
+                </Link>
+                <div className="search-book-input-wrapper">
+                  <input
+                    type="text"
+                    placeholder="search by title, author"
+                    value={query}
+                    onChange={(e) => setQuery(e.target.value)}
+                  />
+                </div>
+              </div>
+              <div className="search-books-result">
+                <ol className="books-grid">
+                  {query &&
+                    result.map((book) => (
+                      <li key={book.id}>
+                        <Book
+                          book={book}
+                          inputRack={inputRack}
+                          bookSight={bookSight}
+                        />
+                      </li>
+                    ))}
+                </ol>
+              </div>
             </div>
-          </div>
-          <div className="search-books-result">
-            <ol className="books-grid">
-              {query &&
-                result.map((book) => (
-                  <li key={book.id}>
-                    <Book
-                      book={book}
-                      inputRack={inputRack}
-                      bookSight={bookSight}
-                    />
-                  </li>
-                ))}
-            </ol>
-          </div>
+          )}
         </div>
-      )}
+      </center>
     </div>
   );
 }
